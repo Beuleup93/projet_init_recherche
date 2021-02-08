@@ -1,0 +1,227 @@
+<FlatButton@ButtonBehavior+Label>:
+    font_size: 20
+    
+<MySpinnerOption@SpinnerOption>:
+    background_color: [0, 0, 1, 1]
+    
+<OperatorWindow>:
+    id: main_win
+    orientation: 'vertical'
+    canvas.before:
+        Color:
+            rgba: (1, 1, 1, 1)
+        Rectangle: 
+            pos: self.pos
+            size: self.size
+            
+    BoxLayout:
+        id: header
+        size_hint_y: None
+        height: 40
+        canvas.before:
+            Color:
+                rgba: (.06, .45, .45, 1)
+            Rectangle: 
+                pos: self.pos
+                size: self.size
+        Label:
+            text: ''
+            size_hint_x: .9
+            bold: True
+            color: (1,1,1,1)
+        FlatButton:
+            id: loggedin_user
+            text: 'Admin'
+            color: (1,1,1,1)
+    
+    BoxLayout:
+        id: current
+        height: 50
+        size_hint_y: None
+        canvas.before:
+            Color:
+                rgba: (1,1,1, 1)
+            Rectangle:
+                size: self.size
+                pos: self.size
+        Button:
+            text: 'Projet Intégré & Gestion de projet'
+            background_normal: ''
+            background_color: (.06,.32,.32, 1)
+            size_hint_x: .4
+        Button:
+            id: 'repr_btn'
+            text: 'Analyse de données issues des reseaux d’information'
+            background_normal: ''
+            background_color: (.06,.4,.4, 1)
+        Button:
+            id: cur_price
+            text: 'Année : 2020-2021'
+            background_normal: ''
+            background_color: (.06,.65,.65, 1)
+            size_hint_x: .3
+            
+    BoxLayout:
+        padding: 10
+        BoxLayout:
+            id: product_details
+            orientation: "vertical"
+            size_hint_x: .8
+            spacing: 10
+            
+            BoxLayout:
+                id: product_labels
+                size_hint_y: None
+                height: 40
+                canvas.before:
+                    Color:
+                        rgba: (.06, .45, .45, 1)
+                    Rectangle: 
+                        pos: self.pos
+                        size: self.size
+                FlatButton:
+                    text: 'Analyse'
+                    size_hint_x: .2
+                FlatButton:
+                    text: 'Detection de communauté'
+                    size_hint_x: .4
+                FlatButton:
+                    text: 'Catégorisation des articles'
+                    size_hint_x: .4
+            
+            BoxLayout: 
+                id: product_inputs
+                size_hint_y: None
+                height: 40
+                canvas.before:
+                    Color:
+                        rgba: (.06, .45, .45, 1)
+                    Rectangle: 
+                        pos: self.pos
+                        size: self.size
+                Button:
+                    text: "Initialiser"
+                    font_size: 20
+                    size_hint_x: .1
+                    background_normal: ''
+                    background_color: (.06,.32,.32, 1)
+                    on_release: root.reset_all()
+                FlatButton:
+                    text: 'Taille Echantillon'
+                    size_hint_x: .1
+                Spinner:
+                    id: taille_id
+                    size_hint_x: .1
+                    text: '---choisir---'
+                    values: '---choisir---','35', '50', '100', '150', '200'
+                    background_normal: ''
+                    background_color: (.06,.65,.65, 1)
+                    font_size: 20
+                    on_text: root.update_purchases(taille_id.text)
+                Button:
+                    text: "Matrice"
+                    font_size: 20
+                    size_hint_x: .1
+                    background_normal: ''
+                    background_color: (.06,.32,.32, 1)
+                    on_release: root.construct_matrice()
+
+                Button:
+                    text: 'Afficher Graphe'
+                    font_size: 20
+                    size_hint_x: .1
+                    background_normal: ''
+                    background_color: (.06,.32,.32, 1)
+                    on_release: root.show_graphe()
+                Button:
+                    text: 'Auteurs centraux'
+                    size_hint_x: .1
+                    font_size: 20
+                    background_normal: ''
+                    background_color: (.06,.32,.32, 1)
+                    on_release: root.auteur_centraux()
+                Button:
+                    text: 'Voisinage'
+                    size_hint_x: .1
+                    font_size: 20
+                    background_normal: ''
+                    background_color: (.06,.32,.32, 1)
+                    on_release: root.auteur_voisinage()
+                TextInput:
+                    id: voisinage_inp
+                    size_hint_x: .1
+                    multiline: False
+                    on_text_validate:root.voisinage()
+                
+                Button:
+                    text: "Communautés"
+                    size_hint_x: .1
+                    font_size: 20
+                    background_normal: ''
+                    background_color: (.06,.32,.32, 1) 
+                    on_release: root.detecter_communaute()
+
+                Spinner:
+                    id: spinner_id
+                    size_hint_x: .1
+                    text: 'Choisir Algorithme'
+                    values: 'Multi_Level', 'Newman', 'Between'
+                    background_normal: ''
+                    background_color: (.06,.65,.65, 1)
+                    font_size: 20
+                    on_text: root.spinner_clicked(spinner_id.text)
+                    
+                Button:
+                    text: "Conclusion"
+                    size_hint_x: .1
+                    font_size: 20
+                    background_normal: ''
+                    background_color: (.06,.32,.32, 1) 
+                    on_release: root.conclusion()
+
+            BoxLayout:
+                id: add_to_cart
+                orientation: 'vertical'
+                BoxLayout:
+                    size_hint_y: None
+                    height: 50
+                    spacing: 5
+                    canvas.before:
+                        Color:
+                            rgba: (.06, .45, .45,1)
+                        Rectangle:
+                            size: self.size
+                            pos: self.pos
+                    Label:
+                        text: ''
+                        size_hint_x: .2
+                    Label:
+                        text: 'Ecran de Visualisation'
+                        size_hint_x: .6
+                    Label:
+                        text: ''
+                        size_hint_x: .2
+
+                ScrollView:
+                    do_scroll_x: False
+                    do_scroll_y: True
+                    GridLayout:
+                        id: images
+                        spacing: 5
+                        cols: 2
+                        
+        BoxLayout:
+            id: preview
+            orientation: 'vertical'
+            size_hint_x: .2
+
+            TextInput:
+                id: receipt_preview
+                readonly: True
+                font_size: 24
+                text: '\t\t\t\t\t\t Main Screen \n\n'
+               
+
+           
+             
+            
